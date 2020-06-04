@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">KakaoPay_Homework</string>
+
+    <style name="web_ssl_error">"이 사이트의 보안 인증서는 신뢰할 수 없습니다.\n계속 진행하시겠습니까?"</style>
+</resources>

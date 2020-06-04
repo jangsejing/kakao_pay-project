@@ -1,0 +1,125 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.jess.kp"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    dexOptions {
+        jumboMode true
+        javaMaxHeapSize "Xg"
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def appName = 'jess'
+            def buildType = buildType.name
+            def date = new Date().format('yyMMddHHmm')
+            def apkName = appName + '_' + buildType + '_' + date + '.apk'
+            outputFileName = apkName
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+// test
+dependencies {
+    testImplementation 'androidx.test:core:1.2.0'
+    testImplementation 'androidx.test.ext:junit:1.1.1'
+    testImplementation 'org.mockito:mockito-core:2.28.2' // mock
+    testImplementation 'org.mockito:mockito-inline:2.25.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+
+//    androidTestImplementation 'androidx.test:core:1.2.0'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+//    androidTestImplementation 'androidx.test.ext:truth:1.2.0'
+}
+
+// general
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.jakewharton.timber:timber:4.7.1' // Logger
+}
+
+// jetbrains
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    def coroutines = "1.3.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+}
+
+// androidx : https://developer.android.com/jetpack/androidx/migrate
+dependencies {
+    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation "androidx.browser:browser:1.2.0"
+
+    def lifeCycle = '2.2.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifeCycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifeCycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycle"
+    implementation "androidx.lifecycle:lifecycle-runtime:$lifeCycle"
+}
+
+// google
+dependencies {
+    implementation 'com.google.android.material:material:1.1.0'
+
+    // dagger
+    def dagger = '2.27'
+    implementation "com.google.dagger:dagger:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+    implementation "com.google.dagger:dagger-android:$dagger"
+    implementation "com.google.dagger:dagger-android-support:$dagger"
+    kapt "com.google.dagger:dagger-android-processor:$dagger"
+}
+
+// glide
+dependencies {
+    def glide = '4.10.0'
+    implementation "com.github.bumptech.glide:glide:$glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
+}
+
+// squareup
+dependencies {
+    def retrofit = '2.7.1'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation "com.squareup.retrofit2:converter-simplexml:$retrofit"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.4.0"
+}

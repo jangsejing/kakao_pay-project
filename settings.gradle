@@ -1,0 +1,2 @@
+rootProject.name='KakaoPay_Homework'
+include ':app'
