@@ -46,6 +46,7 @@ internal abstract class BaseRecyclerViewAdapter<T : Any, VD : ViewDataBinding>(
         return viewHolder
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
         holder.onBind(list[position])
         onBindData(position, list[position], holder.viewDataBinding as VD)

@@ -6,6 +6,11 @@ import android.view.View
 import androidx.core.content.ContextCompat
 
 /**
+ * @author jess
+ * @since 2020.06.12
+ */
+
+/**
  * Ripple 사각형
  */
 fun View.addRipple() = with(TypedValue()) {

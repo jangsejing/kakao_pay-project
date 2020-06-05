@@ -5,6 +5,11 @@ import androidx.databinding.BindingAdapter
 import com.jess.kp.common.extension.loadImage
 
 /**
+ * @author jess
+ * @since 2020.06.12
+ */
+
+/**
  * 이미지 로드
  */
 @BindingAdapter("loadImage")

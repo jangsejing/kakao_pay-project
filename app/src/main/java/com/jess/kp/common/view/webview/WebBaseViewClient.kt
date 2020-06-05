@@ -44,12 +44,12 @@ class WebBaseViewClient(private val context: Context?) : WebViewClient() {
             setTitle(R.string.web_ssl_error)
             setPositiveButton(
                 context.getString(android.R.string.ok)
-            ) { dialog, which ->
+            ) { _, _ ->
                 handler.proceed()
             }
             setNegativeButton(
                 context.getString(android.R.string.cancel)
-            ) { dialog, which ->
+            ) { _, _ ->
                 handler.cancel()
             }
             setCancelable(false)

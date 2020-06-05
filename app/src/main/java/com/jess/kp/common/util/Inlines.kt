@@ -3,6 +3,11 @@ package com.jess.kp.common.util
 import timber.log.Timber
 
 /**
+ * @author jess
+ * @since 2020.06.12
+ */
+
+/**
  * 예외처리
  *
  * @param action

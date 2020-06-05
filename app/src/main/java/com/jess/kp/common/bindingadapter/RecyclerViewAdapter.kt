@@ -5,6 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jess.kp.common.extension.addItems
 
 /**
+ * @author jess
+ * @since 2020.06.12
+ */
+
+/**
  * RecyclerView Adapter
  *
  * @param items

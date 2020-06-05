@@ -12,6 +12,7 @@ import com.jess.kp.common.util.tryCatch
  * @param items
  * @param isClear
  */
+@Suppress("UNCHECKED_CAST")
 @BindingAdapter(value = ["items", "isClear"], requireAll = false)
 fun RecyclerView.addItems(
     items: List<Any>?,

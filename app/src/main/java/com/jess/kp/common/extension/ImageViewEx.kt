@@ -9,6 +9,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.jess.kp.R
 
 /**
+ * @author jess
+ * @since 2020.06.12
+ */
+
+/**
  * 이미지 로드
  */
 fun ImageView.loadImage(url: String?) {

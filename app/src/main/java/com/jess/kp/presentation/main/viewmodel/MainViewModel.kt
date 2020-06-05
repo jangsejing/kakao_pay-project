@@ -1,4 +1,10 @@
 package com.jess.kp.presentation.main.viewmodel
 
-class MainViewModel {
+import androidx.lifecycle.ViewModel
+
+/**
+ * @author jess
+ * @since 2020.06.12
+ */
+class MainViewModel : ViewModel() {
 }

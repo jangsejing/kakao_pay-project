@@ -50,7 +50,7 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
         binding = DataBindingUtil.setContentView(this, layoutRes)
         binding.run {
             lifecycleOwner = this@BaseActivity
-            setVariable(BR.viewModel, viewModel)
+//            setVariable(BR.viewModel, viewModel)
         }
     }
 }
