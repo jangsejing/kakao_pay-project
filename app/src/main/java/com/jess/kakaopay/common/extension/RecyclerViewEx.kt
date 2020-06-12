@@ -13,7 +13,7 @@ import com.jess.kakaopay.common.util.tryCatch
  * @param isClear
  */
 @Suppress("UNCHECKED_CAST")
-@BindingAdapter(value = ["items", "isClear"], requireAll = false)
+@BindingAdapter(value = ["addItems", "isClear"], requireAll = false)
 fun RecyclerView.addItems(
     items: List<Any>?,
     isClear: Boolean = true

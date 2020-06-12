@@ -17,5 +17,5 @@ interface NaverService {
     @GET("/v1/search/movie.json")
     suspend fun getMovies(
         @Query("query") query: String
-    ): Response<List<MovieData>>
+    ): Response<MovieData?>
 }

@@ -3,9 +3,12 @@ package com.jess.kakaopay.common.base
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jess.kakaopay.BR
 import com.jess.kakaopay.common.extension.createActivityViewModel
+import com.jess.kakaopay.common.extension.showToast
+import com.jess.kakaopay.common.view.dialog.ProgressDialog
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -33,6 +36,11 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
         createActivityViewModel(viewModelFactory, viewModelClass)
     }
 
+    // progress
+    private val progressDialog by lazy {
+        ProgressDialog(this)
+    }
+
     // 레이아웃 초기화
     abstract fun initLayout()
 
@@ -43,15 +51,36 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
         super.onCreate(savedInstanceState)
         initDataBinding()
         initLayout()
+        initStatus()
         onCreated(savedInstanceState)
     }
 
-    // 데이터 바인딩 초기화
+    /**
+     * 데이터 바인딩 초기화
+     */
     protected open fun initDataBinding() {
         binding = DataBindingUtil.setContentView(this, layoutRes)
         binding.run {
             lifecycleOwner = this@BaseActivity
             setVariable(BR.vm, viewModel)
+        }
+    }
+
+    /**
+     * 상태 체크
+     */
+    private fun initStatus() {
+        viewModel.run {
+            status.observe(this@BaseActivity, Observer {
+                when (it) {
+                    is BaseStatus.Progress -> {
+                        if (it.isShow) progressDialog.isShowing else progressDialog.dismiss()
+                    }
+                    is BaseStatus.Toast -> {
+                        showToast(it.message)
+                    }
+                }
+            })
         }
     }
 }

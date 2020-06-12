@@ -21,6 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presentation.detail.DetailActivity"
+            android:theme="@style/DetailTheme" />
     </application>
 
 </manifest>

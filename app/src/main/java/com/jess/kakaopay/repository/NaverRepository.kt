@@ -2,6 +2,7 @@ package com.jess.kakaopay.repository
 
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.repository.service.NaverService
+import retrofit2.Response
 
 
 /**
@@ -9,13 +10,13 @@ import com.jess.kakaopay.repository.service.NaverService
  * @since 2020.06.12
  */
 interface NaverRepository {
-    suspend fun getMovie(query: String): List<MovieData>?
+    suspend fun getMovie(query: String): Response<MovieData?>
 }
 
 class NaverRepositoryImpl constructor(
     private val service: NaverService
 ) : NaverRepository {
 
-    override suspend fun getMovie(query: String): List<MovieData>? = service.getMovies(query).body()
-
+    override suspend fun getMovie(query: String): Response<MovieData?> =
+        service.getMovies(query)
 }

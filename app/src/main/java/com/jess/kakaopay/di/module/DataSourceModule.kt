@@ -1,8 +1,8 @@
 package com.jess.kakaopay.di.module
 
 import com.jess.kakaopay.di.DispatcherProvider
-import com.jess.kakaopay.repository.datasource.main.MainDataSource
-import com.jess.kakaopay.repository.datasource.main.MainDataSourceImpl
+import com.jess.kakaopay.repository.datasource.MainDataSource
+import com.jess.kakaopay.repository.datasource.MainDataSourceImpl
 import dagger.Module
 import dagger.Provides
 
@@ -13,6 +13,6 @@ class DataSourceModule {
     fun provideMainDataSource(
         dispatcher: DispatcherProvider
     ): MainDataSource {
-        return MainDataSourceImpl()
+        return MainDataSourceImpl(dispatcher)
     }
 }

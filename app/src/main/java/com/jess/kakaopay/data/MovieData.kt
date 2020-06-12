@@ -1,5 +1,7 @@
 package com.jess.kakaopay.data
 
+import java.io.Serializable
+
 /**
  * 영화 Response
  *
@@ -22,5 +24,5 @@ data class MovieData(
         val director: String?,
         val actor: String?,
         val userRating: Float
-    )
+    ) : Serializable
 }

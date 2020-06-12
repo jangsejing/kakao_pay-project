@@ -3,23 +3,32 @@ package com.jess.kakaopay.common.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.Job
 
 /**
  * @author jess
  * @since 2020.06.12
  */
-abstract class BaseViewModel: ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
-    // progress
-    protected val _isProgress = MutableLiveData<Boolean>()
-    val isProgress: LiveData<Boolean> = _isProgress
+    protected val _status = MutableLiveData<BaseStatus>()
+    val status: LiveData<BaseStatus> = _status
 
-    // IO Dispatchers
-    val ioDispatchers: CoroutineContext = Dispatchers.IO
+    internal val mainScope = viewModelScope.coroutineContext + Dispatchers.Main
+    internal val ioScope = viewModelScope.coroutineContext + Dispatchers.IO
 
-    // UI Dispatchers
-    val uiDispatchers: CoroutineContext = Dispatchers.Main
+    override fun onCleared() {
+        super.onCleared()
+    }
 
+    fun onProgress(isShow: Boolean) {
+        _status.value = BaseStatus.Progress(isShow)
+    }
+
+    fun onToast(message: String) {
+        _status.value = BaseStatus.Toast(message)
+    }
 }
