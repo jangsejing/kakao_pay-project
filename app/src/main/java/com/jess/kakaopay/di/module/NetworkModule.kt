@@ -1,7 +1,8 @@
 package com.jess.kakaopay.di.module
 
 import com.jess.kakaopay.BuildConfig
-import com.jess.kakaopay.repository.network.service.TempService
+import com.jess.kakaopay.common.constant.Network
+import com.jess.kakaopay.repository.service.NaverService
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -27,8 +28,12 @@ class NetworkModule {
     @Singleton
     fun provideInterceptor(): Interceptor {
         return Interceptor { chain ->
-            val request = chain.request()
-            chain.proceed(request.newBuilder().build())
+            val original = chain.request()
+            val request = original.newBuilder().apply {
+                header("X-Naver-Client-Id", Network.naverClientId)
+                header("X-Naver-Client-Secret", Network.naverClientSecret)
+            }.build()
+            chain.proceed(request)
         }
     }
 
@@ -36,25 +41,27 @@ class NetworkModule {
     @Singleton
     fun createClient(interceptor: Interceptor): OkHttpClient {
         return OkHttpClient.Builder().apply {
-            if (BuildConfig.DEBUG) addInterceptor(
-                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-            )
             connectTimeout(NETWORK_TIME_OUT, TimeUnit.SECONDS)
             readTimeout(NETWORK_TIME_OUT, TimeUnit.SECONDS)
+            if (BuildConfig.DEBUG) {
+                addInterceptor(
+                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+                )
+            }
             addInterceptor(interceptor)
         }.build()
     }
 
     @Singleton
     @Provides
-    fun provideTempService(
+    fun provideNaverService(
         okHttpClient: OkHttpClient
-    ): TempService {
+    ): NaverService {
         return Retrofit.Builder()
-            .baseUrl("https://api.rss2json.com/")
+            .baseUrl(Network.naverUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(TempService::class.java)
+            .create(NaverService::class.java)
     }
 }

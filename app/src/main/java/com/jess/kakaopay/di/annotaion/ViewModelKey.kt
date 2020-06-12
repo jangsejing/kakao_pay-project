@@ -1,7 +1,6 @@
-package com.jess.kakaopay.di.qualifier
+package com.jess.kakaopay.di.annotaion
 
 import androidx.lifecycle.ViewModel
-import com.jess.kakaopay.presentation.main.viewmodel.MainViewModel
 import dagger.MapKey
 import kotlin.reflect.KClass
 

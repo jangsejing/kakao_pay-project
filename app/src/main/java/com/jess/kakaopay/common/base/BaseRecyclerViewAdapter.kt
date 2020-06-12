@@ -14,15 +14,15 @@ import com.jess.kakaopay.common.extension.addRipple
  * @author jess
  * @since 2020.06.12
  */
-internal abstract class BaseRecyclerViewAdapter<T : Any, VD : ViewDataBinding>(
+abstract class BaseRecyclerViewAdapter<ITEM : Any, VD : ViewDataBinding>(
     @LayoutRes private val layoutId: Int = 0
-) : RecyclerView.Adapter<BaseViewHolder<T>>() {
+) : RecyclerView.Adapter<BaseViewHolder<ITEM>>() {
 
-    private val list = mutableListOf<T>()
-    private var itemClickListener: ((View, T?) -> Unit)? = null
+    private val list = mutableListOf<ITEM>()
+    private var itemClickListener: ((View, ITEM?) -> Unit)? = null
     private var isCircleRipple: Boolean = false
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<T> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<ITEM> {
 
         require(layoutId > 0) { "Empty Layout Resource" }
 
@@ -47,7 +47,7 @@ internal abstract class BaseRecyclerViewAdapter<T : Any, VD : ViewDataBinding>(
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder<ITEM>, position: Int) {
         holder.onBind(list[position])
         onBindData(position, list[position], holder.viewDataBinding as VD)
     }
@@ -56,14 +56,14 @@ internal abstract class BaseRecyclerViewAdapter<T : Any, VD : ViewDataBinding>(
         return this.list.size
     }
 
-    fun addItems(items: List<T>?) = apply {
+    fun addItems(items: List<ITEM>?) = apply {
         items?.let {
             list.addAll(it)
             notifyDataSetChanged()
         }
     }
 
-    fun addItem(item: T) = apply {
+    fun addItem(item: ITEM) = apply {
         list.add(item)
         notifyDataSetChanged()
     }
@@ -78,7 +78,7 @@ internal abstract class BaseRecyclerViewAdapter<T : Any, VD : ViewDataBinding>(
         notifyItemRemoved(position)
     }
 
-    fun getItems(): List<T> {
+    fun getItems(): List<ITEM> {
         return list
     }
 
@@ -90,7 +90,7 @@ internal abstract class BaseRecyclerViewAdapter<T : Any, VD : ViewDataBinding>(
      */
     open fun setOnItemClickListener(
         isCircleRipple: Boolean = false,
-        listener: ((View, T?) -> Unit)
+        listener: ((View, ITEM?) -> Unit)
     ) {
         this.itemClickListener = listener
         this.isCircleRipple = isCircleRipple
@@ -98,7 +98,7 @@ internal abstract class BaseRecyclerViewAdapter<T : Any, VD : ViewDataBinding>(
 
     open fun createViewHolder(
         dataBinding: ViewDataBinding
-    ): BaseViewHolder<T> {
+    ): BaseViewHolder<ITEM> {
         return BaseViewHolder(dataBinding)
     }
 
@@ -111,7 +111,7 @@ internal abstract class BaseRecyclerViewAdapter<T : Any, VD : ViewDataBinding>(
         )
     }
 
-    open fun onBindData(position: Int, data: T?, dataBinding: VD) {
+    open fun onBindData(position: Int, data: ITEM?, dataBinding: VD) {
 
     }
 

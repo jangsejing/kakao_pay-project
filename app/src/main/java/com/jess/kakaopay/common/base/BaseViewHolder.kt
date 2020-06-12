@@ -2,6 +2,7 @@ package com.jess.kakaopay.common.base
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.jess.kakaopay.BR
 import com.jess.kakaopay.common.util.tryCatch
 
 /**
@@ -16,7 +17,7 @@ open class BaseViewHolder<T : Any?>(
 
     open fun onBind(item: T?) {
         tryCatch {
-//            viewDataBinding.setVariable(BR.item, item)
+            viewDataBinding.setVariable(BR.item, item)
             viewDataBinding.executePendingBindings()
         }
     }

@@ -1,7 +1,10 @@
 package com.jess.kakaopay.di.module
 
+import com.jess.kakaopay.di.annotaion.ActivityScoped
+import com.jess.kakaopay.presentation.main.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+
 
 /**
  * @author jess
@@ -10,10 +13,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityModule {
 
-//    @ContributesAndroidInjector
-//    abstract fun bindMainActivity(): MainActivity
-//
-//    @ContributesAndroidInjector
-//    abstract fun bindDetailActivity(): DetailActivity
+    @ActivityScoped
+    @ContributesAndroidInjector
+    abstract fun bindMainActivity(): MainActivity
 
 }

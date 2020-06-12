@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="vm"
-            type="com.jess.kakaopay.presentation.main.MainViewModel" />
+            name="item"
+            type="com.jess.kakaopay.data.MovieData.Item" />
 
     </data>
 
