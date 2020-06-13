@@ -12,6 +12,7 @@ import com.jess.kakaopay.databinding.MainItemBinding
 import com.jess.kakaopay.presentation.detail.DetailActivity
 import com.jess.kakaopay.presentation.detail.DetailActivity.Companion.EXTRA_MOVIE_DATA
 import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.android.synthetic.main.search_view.*
 import timber.log.Timber
 
 /**
@@ -27,15 +28,6 @@ class MainActivity : BaseActivity<MainActivityBinding, MainViewModel>() {
     override fun initLayout() {
         rv_movie.adapter = object :
             BaseRecyclerViewAdapter<MovieData.Item, MainItemBinding>(R.layout.main_item) {
-
-            override fun onBindData(
-                position: Int,
-                data: MovieData.Item?,
-                dataBinding: MainItemBinding
-            ) {
-//                super.onBindData(position, data, dataBinding)
-//                dataBinding.ivThumbnail.loadImage(data?.image)
-            }
         }.apply {
             setOnItemClickListener { view, item ->
                 val intent = Intent(this@MainActivity, DetailActivity::class.java).apply {
@@ -44,19 +36,31 @@ class MainActivity : BaseActivity<MainActivityBinding, MainViewModel>() {
                 startActivity(intent)
             }
         }
+
+        cv_search.seOnTextListener {
+            viewModel.getMovie(it)
+        }
+
+        et_search.setText("베트맨")
     }
 
     override fun onCreated(savedInstanceState: Bundle?) {
-        viewModel.getMovie()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cv_search.onResume()
+    }
+
+    override fun onPause() {
+        cv_search.onPause()
+        super.onPause()
     }
 
     override fun initDataBinding() {
         super.initDataBinding()
         viewModel.run {
-            getMovie().observe(this@MainActivity, Observer {
-                Timber.d(it.toString())
-                (rv_movie.adapter as BaseRecyclerViewAdapter<MovieData.Item, *>).addItems(it)
-            })
         }
     }
 }

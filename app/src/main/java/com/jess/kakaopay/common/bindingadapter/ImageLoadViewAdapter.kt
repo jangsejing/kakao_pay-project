@@ -6,7 +6,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.jess.kakaopay.common.extension.loadImage
 import com.jess.kakaopay.common.view.component.ImageLoadView
-import kotlinx.android.synthetic.main.image_load_view.view.*
 
 /**
  * @author jess

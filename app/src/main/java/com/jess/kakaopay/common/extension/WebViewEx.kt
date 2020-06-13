@@ -1,7 +1,6 @@
 package com.jess.kakaopay.common.extension
 
 import android.webkit.WebView
-import androidx.databinding.BindingAdapter
 
 /**
  * WebView URL Load

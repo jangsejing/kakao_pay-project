@@ -6,7 +6,7 @@ import java.io.Serializable
  * 영화 Response
  *
  * @author jess
- * @since 2020.06.19
+ * @since 2020.03.122020.06.19
  */
 data class MovieData(
     val lastBuildDate: String?,

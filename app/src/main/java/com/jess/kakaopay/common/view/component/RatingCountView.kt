@@ -7,7 +7,6 @@ import android.widget.FrameLayout
 import com.jess.kakaopay.databinding.RateCountViewBinding
 import kotlinx.android.synthetic.main.rate_count_view.view.*
 
-
 /**
  * 평점
  *

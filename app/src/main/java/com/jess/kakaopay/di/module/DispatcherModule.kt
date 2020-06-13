@@ -5,10 +5,15 @@ import com.jess.kakaopay.di.DispatcherProviderImpl
 import dagger.Binds
 import dagger.Module
 
+/**
+ * @author jess
+ * @since 2020.06.13
+ */
 @Module
-internal interface AppModule {
+abstract class DispatcherModule {
 
     @Binds
-    fun bindDispatchers(dispatcher: DispatcherProviderImpl): DispatcherProvider
+    abstract fun bindDispatchers(dispatcher: DispatcherProviderImpl): DispatcherProvider
 
 }
+

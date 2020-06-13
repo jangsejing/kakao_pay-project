@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 /**
  * @author jess
- * @since 2020.06.19
+ * @since 2020.06.12
  */
 interface NaverService {
 
@@ -16,6 +16,7 @@ interface NaverService {
      */
     @GET("/v1/search/movie.json")
     suspend fun getMovies(
-        @Query("query") query: String
+        @Query("query") query: String?
     ): Response<MovieData?>
+
 }

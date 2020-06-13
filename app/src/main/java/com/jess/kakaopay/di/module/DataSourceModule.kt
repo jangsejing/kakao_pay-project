@@ -1,18 +1,19 @@
 package com.jess.kakaopay.di.module
 
-import com.jess.kakaopay.di.DispatcherProvider
 import com.jess.kakaopay.repository.datasource.MainDataSource
 import com.jess.kakaopay.repository.datasource.MainDataSourceImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
+/**
+ * @author jess
+ * @since 2020.06.13
+ */
 @Module
-class DataSourceModule {
+abstract class DataSourceModule {
 
-    @Provides
-    fun provideMainDataSource(
-        dispatcher: DispatcherProvider
-    ): MainDataSource {
-        return MainDataSourceImpl(dispatcher)
-    }
+    @Binds
+    abstract fun bindMainDataSource(dataSource: MainDataSourceImpl): MainDataSource
+
 }
+

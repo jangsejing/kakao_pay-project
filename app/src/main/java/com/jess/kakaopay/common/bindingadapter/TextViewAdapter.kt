@@ -5,7 +5,6 @@ import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
 import com.jess.kakaopay.common.extension.accentTextColor
 import com.jess.kakaopay.common.extension.replaceText
-import com.jess.kakaopay.common.util.tryCatch
 
 /**
  * @author jess

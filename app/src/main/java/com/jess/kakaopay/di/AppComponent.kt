@@ -2,7 +2,6 @@ package com.jess.kakaopay.di
 
 import com.jess.kakaopay.JessApplication
 import com.jess.kakaopay.di.module.*
-import com.jess.kakaopay.di.module.AppModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -17,9 +16,9 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
-        AppModule::class,
         ActivityModule::class,
         DataSourceModule::class,
+        DispatcherModule::class,
         RepositoryModule::class,
         ViewModelModule::class
     ]
