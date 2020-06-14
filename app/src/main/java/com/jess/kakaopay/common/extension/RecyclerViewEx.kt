@@ -3,6 +3,7 @@ package com.jess.kakaopay.common.extension
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.jess.kakaopay.common.base.BaseListAdapter
 import com.jess.kakaopay.common.base.BaseRecyclerViewAdapter
 import com.jess.kakaopay.common.util.tryCatch
 
@@ -26,6 +27,26 @@ fun RecyclerView.addItems(
 
             if (!items.isNullOrEmpty()) {
                 this.addItems(items)
+            }
+        }
+    }
+}
+
+
+/**
+ * RecyclerView Adapter
+ *
+ * @param items
+ */
+@Suppress("UNCHECKED_CAST")
+@BindingAdapter("addItems")
+fun RecyclerView.submitList(
+    items: List<Any>?
+) {
+    tryCatch {
+        (this.adapter as? BaseListAdapter<Any>)?.run {
+            if (!items.isNullOrEmpty()) {
+                this.submitList(items)
             }
         }
     }

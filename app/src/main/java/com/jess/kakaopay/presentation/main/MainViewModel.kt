@@ -1,7 +1,5 @@
 package com.jess.kakaopay.presentation.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jess.kakaopay.common.base.BaseViewModel
 import com.jess.kakaopay.repository.datasource.MainDataSource
@@ -18,7 +16,7 @@ class MainViewModel @Inject constructor(
 ) : BaseViewModel(dataSource) {
 
     val moveItems = dataSource.movieItems
-    val isClear: LiveData<Boolean> get() = dataSource.isClear
+    val diffCallback = dataSource.diffCallback
 
     /**
      * 영화 검색
@@ -33,9 +31,9 @@ class MainViewModel @Inject constructor(
     /**
      * 영화 다음 페이지 검색
      */
-    fun getMovieNextPage() {
+    fun onNextPage() {
         viewModelScope.launch {
-            dataSource.getMovieNextPage()
+            dataSource.getNextPage()
         }
     }
 }

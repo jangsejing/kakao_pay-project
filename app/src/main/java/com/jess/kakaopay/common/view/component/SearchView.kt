@@ -29,6 +29,7 @@ class SearchView @JvmOverloads constructor(
 
     companion object {
         const val ACTION_DELETE = "ACTION_DELETE"
+        const val ACTION_INPUT = "ACTION_INPUT"
     }
 
     private val binding = SearchViewBinding.inflate(LayoutInflater.from(context), this, true)
@@ -83,6 +84,14 @@ class SearchView @JvmOverloads constructor(
                     return false
                 }
             })
+
+            setOnKeyListener { v, keyCode, _ ->
+                v.tag = ACTION_INPUT
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    v.tag = ACTION_DELETE
+                }
+                false
+            }
         }
     }
 

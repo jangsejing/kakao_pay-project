@@ -8,10 +8,12 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp">
+        android:layout_marginStart="-2dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_rate"
@@ -29,8 +31,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_rate"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="4dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:includeFontPadding="false"
             android:textColor="@color/grey300"
@@ -39,5 +40,5 @@
             app:layout_constraintLeft_toRightOf="@id/iv_rate"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="5.5" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

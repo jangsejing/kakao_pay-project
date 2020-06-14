@@ -49,16 +49,17 @@
                 app:srcCompat="@drawable/ic_movie"
                 app:tint="@color/grey600" />
 
-            <com.jess.kakaopay.common.view.BoundRecyclerView
+            <com.jess.kakaopay.common.view.PagingRecyclerView
                 android:id="@+id/rv_movie"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                bind:addItems="@{vm.moveItems}"
-                bind:isClear="@{vm.isClear}"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="2"
                 tools:listitem="@layout/main_item" />
+
+            <!--            bind:addItems="@{vm.moveItems}"-->
+            <!--            bind:isClear="@{vm.isClear}"-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{vm.item.subtitle}"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 tools:text="Captain Marvel" />
 
             <!-- 제작년도 -->
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{vm.item.pubDate}"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:visibility="@{!vm.item.pubDate.isEmpty() ? View.VISIBLE : View.GONE}"
                 tools:text="2019" />
 

@@ -8,14 +8,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jess.kakaopay.common.extension.addCircleRipple
 import com.jess.kakaopay.common.extension.addRipple
 
-internal abstract class BasePagedListAdapter<ITEM : Any>(
+internal abstract class BaseListAdapter<ITEM : Any>(
     @LayoutRes private val layoutId: Int = 0,
     diffCallback: DiffUtil.ItemCallback<ITEM>
-) : PagedListAdapter<ITEM, BaseViewHolder<ITEM>>(diffCallback) {
+) : ListAdapter<ITEM, BaseViewHolder<ITEM>>(diffCallback) {
 
     private var itemClickListener: ((View, ITEM?) -> Unit)? = null
     private var isCircleRipple: Boolean = false
