@@ -11,10 +11,9 @@ import com.jess.kakaopay.common.view.component.ImageLoadView
  * 이미지 로드
  */
 fun ImageLoadView.loadImage(
-    url: String?,
-    isCorners: Boolean = false
+    url: String?
 ) {
     if (!url.isNullOrEmpty()) {
-        this.setCorners(isCorners).load(url)
+        this.load(url)
     }
 }

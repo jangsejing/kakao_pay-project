@@ -15,24 +15,9 @@ import com.jess.kakaopay.common.view.component.ImageLoadView
 /**
  * 이미지 로드
  */
-@BindingAdapter(value = ["url", "isCorners"], requireAll = false)
-fun ImageLoadView.loadImage(
-    url: String?,
-    isCorners: Boolean = false
-) {
-    this.loadImage(url, isCorners)
-}
-
-/**
- * 이미지 로드
- */
 @BindingAdapter("url")
-fun ImageView.loadImage(
+fun ImageLoadView.loadImage(
     url: String?
 ) {
-    Glide.with(this)
-        .load(url)
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .centerCrop()
-        .into(this)
+    this.loadImage(url)
 }

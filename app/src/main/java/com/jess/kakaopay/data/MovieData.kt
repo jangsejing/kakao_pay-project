@@ -20,9 +20,9 @@ data class MovieData(
         val link: String?,
         val image: String?,
         val subtitle: String?,
-        val pubDate: Int,
+        val pubDate: String?,
         val director: String?,
         val actor: String?,
-        val userRating: Float
+        val userRating: String?
     ) : Serializable
 }

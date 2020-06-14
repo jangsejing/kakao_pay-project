@@ -1,7 +1,7 @@
 package com.jess.kakaopay.di.module
 
 import com.jess.kakaopay.BuildConfig
-import com.jess.kakaopay.common.constant.Network
+import com.jess.kakaopay.common.constant.NetworkConfig
 import com.jess.kakaopay.repository.service.NaverService
 import dagger.Module
 import dagger.Provides
@@ -30,8 +30,8 @@ class NetworkModule {
         return Interceptor { chain ->
             val original = chain.request()
             val request = original.newBuilder().apply {
-                header("X-Naver-Client-Id", Network.naverClientId)
-                header("X-Naver-Client-Secret", Network.naverClientSecret)
+                header("X-Naver-Client-Id", NetworkConfig.naverClientId)
+                header("X-Naver-Client-Secret", NetworkConfig.naverClientSecret)
             }.build()
             chain.proceed(request)
         }
@@ -58,7 +58,7 @@ class NetworkModule {
         okHttpClient: OkHttpClient
     ): NaverService {
         return Retrofit.Builder()
-            .baseUrl(Network.naverUrl)
+            .baseUrl(NetworkConfig.naverUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

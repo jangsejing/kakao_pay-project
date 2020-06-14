@@ -2,7 +2,6 @@ package com.jess.kakaopay.presentation.main
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import com.jess.kakaopay.R
 import com.jess.kakaopay.common.base.BaseActivity
 import com.jess.kakaopay.common.base.BaseRecyclerViewAdapter
@@ -13,7 +12,6 @@ import com.jess.kakaopay.presentation.detail.DetailActivity
 import com.jess.kakaopay.presentation.detail.DetailActivity.Companion.EXTRA_MOVIE_DATA
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.search_view.*
-import timber.log.Timber
 
 /**
  * @author jess
@@ -26,22 +24,29 @@ class MainActivity : BaseActivity<MainActivityBinding, MainViewModel>() {
     override val viewModelClass = MainViewModel::class.java
 
     override fun initLayout() {
-        rv_movie.adapter = object :
-            BaseRecyclerViewAdapter<MovieData.Item, MainItemBinding>(R.layout.main_item) {
-        }.apply {
-            setOnItemClickListener { view, item ->
-                val intent = Intent(this@MainActivity, DetailActivity::class.java).apply {
-                    putExtra(EXTRA_MOVIE_DATA, item)
+        rv_movie.run {
+            adapter = object :
+                BaseRecyclerViewAdapter<MovieData.Item, MainItemBinding>(R.layout.main_item) {
+            }.apply {
+                setOnItemClickListener { view, item ->
+                    val intent = Intent(this@MainActivity, DetailActivity::class.java).apply {
+                        putExtra(EXTRA_MOVIE_DATA, item)
+                    }
+                    startActivity(intent)
                 }
-                startActivity(intent)
+            }
+
+            setOnBoundListener {
+                viewModel.getMovieNextPage()
             }
         }
 
+        // 텍스트 리턴
         cv_search.seOnTextListener {
             viewModel.getMovie(it)
         }
 
-        et_search.setText("베트맨")
+        et_search.setText("마블")
     }
 
     override fun onCreated(savedInstanceState: Bundle?) {
@@ -56,11 +61,5 @@ class MainActivity : BaseActivity<MainActivityBinding, MainViewModel>() {
     override fun onPause() {
         cv_search.onPause()
         super.onPause()
-    }
-
-    override fun initDataBinding() {
-        super.initDataBinding()
-        viewModel.run {
-        }
     }
 }

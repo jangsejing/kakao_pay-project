@@ -31,68 +31,38 @@ class ImageLoadView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private val binding = ImageLoadViewBinding.inflate(LayoutInflater.from(context), this, true)
-    private var isCorners: Boolean = false
-
-    init {
-        binding.isLoaded = true
-    }
-
-    /**
-     * 라운드 설정
-     *
-     * @param isCorners
-     */
-    fun setCorners(isCorners: Boolean) = apply {
-        this.isCorners = isCorners
-    }
+    private var binding = ImageLoadViewBinding.inflate(LayoutInflater.from(context), this, true)
 
     @SuppressLint("CheckResult")
     fun load(url: String) {
         Timber.d(">> load $url")
-
-        val glide = Glide.with(context)
+        Glide.with(iv_succeed)
             .load(url)
             .transition(DrawableTransitionOptions.withCrossFade())
             .centerCrop()
+            .listener(object : RequestListener<Drawable> {
 
-        if (isCorners) {
-            glide.apply(
-                RequestOptions.bitmapTransform(
-                    RoundedCorners(
-                        context.resources.getDimensionPixelSize(
-                            R.dimen.dp8
-                        )
-                    )
-                )
-            )
-        }
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    Timber.d(">> onResourceReady $url")
+                    return false
+                }
 
-        glide.listener(object : RequestListener<Drawable> {
-
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: Target<Drawable>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
-                binding.isLoaded = true
-                Timber.d(">> onResourceReady $url")
-                return false
-            }
-
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Drawable>?,
-                isFirstResource: Boolean
-            ): Boolean {
-                binding.isLoaded = false
-                Timber.d(">> onLoadFailed $url")
-                Timber.d(">> onLoadFailed ${e?.message}")
-                return false
-            }
-        }).into(iv_succeed)
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    Timber.d(">> onLoadFailed $url")
+                    Timber.d(">> onLoadFailed ${e?.message}")
+                    return false
+                }
+            }).into(iv_succeed)
     }
 }

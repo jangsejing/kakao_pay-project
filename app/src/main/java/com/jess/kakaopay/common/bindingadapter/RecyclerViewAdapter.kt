@@ -1,8 +1,8 @@
 package com.jess.kakaopay.common.bindingadapter
 
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.jess.kakaopay.common.extension.addItems
+import com.jess.kakaopay.common.view.BoundRecyclerView
 
 /**
  * @author jess
@@ -16,7 +16,7 @@ import com.jess.kakaopay.common.extension.addItems
  * @param isClear
  */
 @BindingAdapter(value = ["items", "isClear"], requireAll = false)
-fun RecyclerView.addItems(
+fun BoundRecyclerView.addItems(
     items: List<Any>?,
     isClear: Boolean = true
 ) {

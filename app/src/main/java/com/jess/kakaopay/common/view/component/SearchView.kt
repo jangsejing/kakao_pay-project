@@ -27,6 +27,10 @@ class SearchView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : FrameLayout(context, attrs, defStyle), View.OnClickListener {
 
+    companion object {
+        const val ACTION_DELETE = "ACTION_DELETE"
+    }
+
     private val binding = SearchViewBinding.inflate(LayoutInflater.from(context), this, true)
     private var listener: ((String?) -> Unit)? = null
 
@@ -56,7 +60,12 @@ class SearchView @JvmOverloads constructor(
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    listener?.invoke(s.toString())
+                    if (et_search.tag != ACTION_DELETE) {
+                        listener?.invoke(s.toString())
+                    } else {
+                        et_search.tag = null
+                    }
+
                     binding.isDelete = count < 1
                 }
             })
@@ -79,7 +88,10 @@ class SearchView @JvmOverloads constructor(
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.cl_delete -> et_search.setText("")
+            R.id.cl_delete -> {
+                et_search.tag = ACTION_DELETE
+                et_search.setText("")
+            }
         }
     }
 

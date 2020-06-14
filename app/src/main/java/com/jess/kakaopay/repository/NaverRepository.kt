@@ -9,12 +9,12 @@ import retrofit2.Response
  * @since 2020.06.12
  */
 interface NaverRepository {
-    suspend fun getMovie(query: String?): Response<MovieData?>
+    suspend fun getMovie(query: String?, start: Int): Response<MovieData?>
 }
 
 class NaverRepositoryImpl constructor(
     private val service: NaverService
 ) : NaverRepository {
-    override suspend fun getMovie(query: String?): Response<MovieData?> =
-        service.getMovies(query)
+    override suspend fun getMovie(query: String?, start: Int): Response<MovieData?> =
+        service.getMovies(query, start)
 }

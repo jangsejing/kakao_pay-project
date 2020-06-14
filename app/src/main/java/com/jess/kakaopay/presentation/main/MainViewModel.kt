@@ -1,8 +1,11 @@
 package com.jess.kakaopay.presentation.main
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jess.kakaopay.common.base.BaseViewModel
 import com.jess.kakaopay.repository.datasource.MainDataSource
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,15 +18,24 @@ class MainViewModel @Inject constructor(
 ) : BaseViewModel(dataSource) {
 
     val moveItems = dataSource.movieItems
+    val isClear: LiveData<Boolean> get() = dataSource.isClear
 
+    /**
+     * 영화 검색
+     */
     fun getMovie(query: String?) {
-
-        if (query.isNullOrEmpty()) {
-            return
-        }
-
         viewModelScope.launch {
+            delay(300)
             dataSource.getMovieData(query)
+        }
+    }
+
+    /**
+     * 영화 다음 페이지 검색
+     */
+    fun getMovieNextPage() {
+        viewModelScope.launch {
+            dataSource.getMovieNextPage()
         }
     }
 }

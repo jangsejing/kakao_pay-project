@@ -25,8 +25,8 @@ class RatingCountView @JvmOverloads constructor(
 
     }
 
-    fun setRating(rate: Float) {
-        tv_rate.text = rate.toString()
+    fun setRating(rate: String?) {
+        tv_rate.text = rate
     }
 
 }

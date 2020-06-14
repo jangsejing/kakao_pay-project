@@ -6,7 +6,7 @@ package com.jess.kakaopay.common.constant
  * @author jess
  * @since 2020.03.122020.06.19
  */
-object Network {
+object NetworkConfig {
     const val naverUrl = "https://openapi.naver.com"
     const val naverClientId: String = "ZWBj44AXXZBhGsMarS_d"
     const val naverClientSecret = "vUUpGBQpS2"
