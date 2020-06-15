@@ -7,8 +7,8 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.jess.kakaopay.common.extension.addCircleRipple
-import com.jess.kakaopay.common.extension.addRipple
+import com.jess.kakaopay.common.extension.setCircleRipple
+import com.jess.kakaopay.common.extension.setRipple
 
 /**
  * @author jess
@@ -34,7 +34,7 @@ abstract class BaseRecyclerViewAdapter<ITEM : Any, VD : ViewDataBinding>(
             // onClick
             itemClickListener?.let { listener ->
                 root.run {
-                    if (isCircleRipple) addCircleRipple() else addRipple()
+                    if (isCircleRipple) setCircleRipple() else setRipple()
                     setOnClickListener { view ->
                         if (viewHolder.adapterPosition != RecyclerView.NO_POSITION) {
                             listener.invoke(view, list[viewHolder.adapterPosition])

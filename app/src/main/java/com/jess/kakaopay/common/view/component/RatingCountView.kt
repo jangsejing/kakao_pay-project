@@ -3,6 +3,7 @@ package com.jess.kakaopay.common.view.component
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import com.jess.kakaopay.databinding.RateCountViewBinding
 import kotlinx.android.synthetic.main.rate_count_view.view.*
@@ -21,12 +22,12 @@ class RatingCountView @JvmOverloads constructor(
 
     private val binding = RateCountViewBinding.inflate(LayoutInflater.from(context), this, true)
 
-    init {
-
-    }
-
     fun setRating(rate: String?) {
-        tv_rate.text = rate
+        rate?.let {
+            tv_rate.text = it
+            visibility = View.VISIBLE
+        } ?: run {
+            visibility = View.GONE
+        }
     }
-
 }

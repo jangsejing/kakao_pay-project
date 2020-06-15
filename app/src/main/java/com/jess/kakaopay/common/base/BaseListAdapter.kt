@@ -10,8 +10,8 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jess.kakaopay.common.extension.addCircleRipple
-import com.jess.kakaopay.common.extension.addRipple
+import com.jess.kakaopay.common.extension.setCircleRipple
+import com.jess.kakaopay.common.extension.setRipple
 
 internal abstract class BaseListAdapter<ITEM : Any>(
     @LayoutRes private val layoutId: Int = 0,
@@ -33,7 +33,7 @@ internal abstract class BaseListAdapter<ITEM : Any>(
             // onClick
             itemClickListener?.let { listener ->
                 root.run {
-                    if (isCircleRipple) addCircleRipple() else addRipple()
+                    if (isCircleRipple) setCircleRipple() else setRipple()
                     setOnClickListener { view ->
                         if (viewHolder.adapterPosition != RecyclerView.NO_POSITION) {
                             listener.invoke(view, getItem(viewHolder.adapterPosition))

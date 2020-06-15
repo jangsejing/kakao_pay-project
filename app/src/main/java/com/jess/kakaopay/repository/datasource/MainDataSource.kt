@@ -7,7 +7,7 @@ import androidx.lifecycle.switchMap
 import androidx.recyclerview.widget.DiffUtil
 import com.jess.kakaopay.common.base.BaseDataSource
 import com.jess.kakaopay.data.MovieData
-import com.jess.kakaopay.di.DispatcherProvider
+import com.jess.kakaopay.di.provider.DispatcherProvider
 import com.jess.kakaopay.repository.NaverRepository
 import timber.log.Timber
 import javax.inject.Inject

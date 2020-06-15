@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 /**
  * Ripple 사각형
  */
-fun View.addRipple() = with(TypedValue()) {
+fun View.setRipple() = with(TypedValue()) {
     context.theme.resolveAttribute(android.R.attr.selectableItemBackground, this, true)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         foreground = ContextCompat.getDrawable(context, resourceId)
@@ -25,7 +25,7 @@ fun View.addRipple() = with(TypedValue()) {
 /**
  * Ripple 원형
  */
-fun View.addCircleRipple() = with(TypedValue()) {
+fun View.setCircleRipple() = with(TypedValue()) {
     context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, this, true)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         foreground = ContextCompat.getDrawable(context, resourceId)

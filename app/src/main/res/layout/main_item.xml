@@ -62,10 +62,13 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{item.subtitle}"
                 android:textColor="#ffffff"
                 android:textSize="14sp"
                 android:visibility="@{!TextUtils.isEmpty(item.subtitle) ? View.VISIBLE : View.GONE}"
+                bind:color="@{@color/colorAccent}"
+                bind:end='@{"&lt;/b>"}'
+                bind:original="@{item.subtitle}"
+                bind:start='@{"&lt;b>"}'
                 tools:text="Captain Marvel" />
 
             <!-- 제작년도 -->

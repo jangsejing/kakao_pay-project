@@ -1,4 +1,4 @@
-package com.jess.kakaopay.di
+package com.jess.kakaopay.di.provider
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

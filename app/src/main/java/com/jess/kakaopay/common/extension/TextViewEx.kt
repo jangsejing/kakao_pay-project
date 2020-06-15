@@ -1,5 +1,6 @@
 package com.jess.kakaopay.common.extension
 
+import android.graphics.Paint
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -69,3 +70,12 @@ fun TextView.replaceText(
     }
     this.text = original
 }
+
+/**
+ * 밑줄
+ */
+fun TextView.underLine() {
+    this.paintFlags = this.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+}
+
+

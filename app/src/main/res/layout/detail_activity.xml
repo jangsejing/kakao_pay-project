@@ -42,21 +42,26 @@
             app:layout_constraintTop_toTopOf="parent"
             bind:url="@{vm.item.image}" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="#85000000"
-            android:orientation="vertical"
             android:padding="15dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
             <!-- 제목 -->
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/brand_blue"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/iv_info"
+                app:layout_constraintTop_toTopOf="parent"
                 bind:newValue='@{""}'
                 bind:oldValue='@{"&lt;b>,&lt;/b>"}'
                 bind:original="@{vm.item.title}"
@@ -64,30 +69,74 @@
 
             <!-- 서브 타이틀  -->
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{vm.item.subtitle}"
                 android:textColor="#ffffff"
                 android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                bind:newValue='@{""}'
+                bind:oldValue='@{"&lt;b>,&lt;/b>"}'
+                bind:original="@{vm.item.subtitle}"
                 tools:text="Captain Marvel" />
 
             <!-- 제작년도 -->
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_pub_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{vm.item.pubDate}"
                 android:textColor="#ffffff"
                 android:textSize="14sp"
-                android:visibility="@{!vm.item.pubDate.isEmpty() ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!TextUtils.isEmpty(vm.item.pubDate) ? View.VISIBLE : View.GONE}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
                 tools:text="2019" />
 
+            <!-- 평점 -->
             <com.jess.kakaopay.common.view.component.RatingCountView
-                android:layout_width="match_parent"
+                android:id="@+id/cv_rate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_pub_date"
                 bind:rating="@{vm.item.userRating}" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- 감독 -->
+            <com.jess.kakaopay.common.view.component.RolePartitionView
+                android:id="@+id/cv_director"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_rate"
+                bind:members="@{vm.item.director}"
+                bind:role="@{@string/detail_director}"
+                tools:visibility="visible" />
+
+            <!-- 배우 -->
+            <com.jess.kakaopay.common.view.component.RolePartitionView
+                android:id="@+id/cv_actor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_director"
+                bind:members="@{vm.item.actor}"
+                bind:role="@{@string/detail_actor}"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintLeft_toRightOf="@id/tv_title"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_info"
+                app:tint="@color/brand_white" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>
