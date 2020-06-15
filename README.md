@@ -1,4 +1,4 @@
-# KaKaoPay_Project
+# KaKaoPay Project
 
 ## API
 https://developers.naver.com/docs/search/movie/
