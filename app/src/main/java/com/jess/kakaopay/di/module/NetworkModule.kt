@@ -30,8 +30,8 @@ class NetworkModule {
         return Interceptor { chain ->
             val original = chain.request()
             val request = original.newBuilder().apply {
-                header("X-Naver-Client-Id", NetworkConfig.naverClientId)
-                header("X-Naver-Client-Secret", NetworkConfig.naverClientSecret)
+                header("X-Naver-Client-Id", NetworkConfig.NAVER_CLIENT_ID)
+                header("X-Naver-Client-Secret", NetworkConfig.NAVER_CLIENT_SECRET)
             }.build()
             chain.proceed(request)
         }
@@ -58,7 +58,7 @@ class NetworkModule {
         okHttpClient: OkHttpClient
     ): NaverService {
         return Retrofit.Builder()
-            .baseUrl(NetworkConfig.naverUrl)
+            .baseUrl(NetworkConfig.NAVER_RUL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

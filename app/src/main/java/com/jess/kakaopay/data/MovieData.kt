@@ -13,8 +13,21 @@ data class MovieData(
     val total: Int,
     val start: Int,
     val display: Int,
-    val items: List<Item>
+    val items: List<Item>?
 ) {
+
+    /**
+     * 시작 페이지
+     *
+     * @param displayCount 불러올 페이지 수
+     */
+    fun getStartNumber(displayCount: Int) = start + displayCount
+
+    /**
+     * 다음 페이지 여부
+     */
+    fun isMorePage() = (start + display) <= total
+
     data class Item(
         val title: String?,
         val link: String?,

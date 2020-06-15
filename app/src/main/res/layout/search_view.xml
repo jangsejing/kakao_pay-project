@@ -71,7 +71,7 @@
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
                 android:textColor="@color/brand_white"
-                android:textColorHint="@color/grey600"
+                android:textColorHint="@color/grey400"
                 android:textSize="14sp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintBottom_toBottomOf="parent"

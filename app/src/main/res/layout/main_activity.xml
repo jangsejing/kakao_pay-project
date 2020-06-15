@@ -55,11 +55,10 @@
                 android:layout_height="match_parent"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                bind:addItems="@{vm.moveItems}"
+                bind:isClear="@{vm.isClear}"
                 tools:itemCount="2"
                 tools:listitem="@layout/main_item" />
-
-            <!--            bind:addItems="@{vm.moveItems}"-->
-            <!--            bind:isClear="@{vm.isClear}"-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -13,7 +13,7 @@ class PagingRecyclerView @JvmOverloads constructor(
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
     companion object {
-        const val VISIBLE_THRESHOLD = 3
+        const val VISIBLE_THRESHOLD = 5
     }
 
     private var listener: (() -> Unit)? = null
@@ -42,23 +42,30 @@ class PagingRecyclerView @JvmOverloads constructor(
                     val visibleItemCount = manager.childCount
                     val lastVisibleItemPosition = manager.findLastVisibleItemPosition()
 
-                    if (!isLoading
-                        && (visibleItemCount + lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount)
-                    ) {
+                    if (totalItemCount == 0 || dy == 0) return
+                    if (
+//                        !isLoading &&
+                        totalItemCount <= (lastVisibleItemPosition + VISIBLE_THRESHOLD)) {
                         Timber.d(">> OnPaging")
                         isLoading = true
                         listener?.invoke()
                     }
+
+//                    if (!isLoading && (visibleItemCount + lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount)) {
+//                        Timber.d(">> OnPaging")
+//                        isLoading = true
+//                        listener?.invoke()
+//                    }
                 }
             }
         })
     }
 
     override fun setAdapter(adapter: Adapter<*>?) {
-        adapter?.registerAdapterDataObserver(object :
-            RecyclerView.AdapterDataObserver() {
+        adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
                 super.onChanged()
+                Timber.d(">> onChanged")
                 isLoading = false
             }
         })

@@ -2,6 +2,7 @@ package com.jess.kakaopay.common.bindingadapter
 
 import androidx.databinding.BindingAdapter
 import com.jess.kakaopay.common.extension.addItems
+import com.jess.kakaopay.common.extension.submitList
 import com.jess.kakaopay.common.view.PagingRecyclerView
 
 /**
@@ -32,5 +33,5 @@ fun PagingRecyclerView.addItems(
 fun PagingRecyclerView.submitList(
     items: List<Any>?
 ) {
-    this.addItems(items)
+    this.submitList(items)
 }

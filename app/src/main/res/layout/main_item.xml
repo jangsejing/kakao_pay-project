@@ -8,6 +8,8 @@
 
         <import type="android.view.View" />
 
+        <import type="android.text.TextUtils" />
+
         <variable
             name="item"
             type="com.jess.kakaopay.data.MovieData.Item" />
@@ -63,6 +65,7 @@
                 android:text="@{item.subtitle}"
                 android:textColor="#ffffff"
                 android:textSize="14sp"
+                android:visibility="@{!TextUtils.isEmpty(item.subtitle) ? View.VISIBLE : View.GONE}"
                 tools:text="Captain Marvel" />
 
             <!-- 제작년도 -->
@@ -72,7 +75,7 @@
                 android:text="@{item.pubDate}"
                 android:textColor="#ffffff"
                 android:textSize="14sp"
-                android:visibility="@{!item.pubDate.isEmpty() ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!TextUtils.isEmpty(item.pubDate) ? View.VISIBLE : View.GONE}"
                 tools:text="2019" />
 
             <com.jess.kakaopay.common.view.component.RatingCountView

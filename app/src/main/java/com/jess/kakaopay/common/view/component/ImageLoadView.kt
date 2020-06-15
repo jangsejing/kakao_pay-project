@@ -9,12 +9,9 @@ import android.widget.FrameLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.jess.kakaopay.R
 import com.jess.kakaopay.databinding.ImageLoadViewBinding
 import kotlinx.android.synthetic.main.image_load_view.view.*
 import timber.log.Timber
@@ -35,7 +32,6 @@ class ImageLoadView @JvmOverloads constructor(
 
     @SuppressLint("CheckResult")
     fun load(url: String) {
-        Timber.d(">> load $url")
         Glide.with(iv_succeed)
             .load(url)
             .transition(DrawableTransitionOptions.withCrossFade())
@@ -49,7 +45,7 @@ class ImageLoadView @JvmOverloads constructor(
                     dataSource: DataSource?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    Timber.d(">> onResourceReady $url")
+//                    Timber.d(">> onResourceReady $url")
                     return false
                 }
 

@@ -16,14 +16,14 @@ class MainViewModel @Inject constructor(
 ) : BaseViewModel(dataSource) {
 
     val moveItems = dataSource.movieItems
-    val diffCallback = dataSource.diffCallback
+    val isClear = dataSource.isClear
 
     /**
      * 영화 검색
      */
     fun getMovie(query: String?) {
         viewModelScope.launch {
-            delay(300)
+            delay(500)
             dataSource.getMovieData(query)
         }
     }

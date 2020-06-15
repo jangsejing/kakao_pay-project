@@ -33,8 +33,9 @@ class MainDataSourceImpl @Inject constructor(
     override val dispatcher: DispatcherProvider
 ) : MainDataSource {
 
-    private var isRequestInProgress = false
-    private var lastRequestedPage = 1
+    private var isRequest = false
+    private var isMorePage = true
+    private var startPage = 1
 
     private val _isClear = MutableLiveData<Boolean>()
     override val isClear: LiveData<Boolean> get() = _isClear
@@ -54,26 +55,30 @@ class MainDataSourceImpl @Inject constructor(
      * API 통신
      */
     private suspend fun requestMovie(
-        query: String?,
-        isNext: Boolean = false
+        query: String?
     ): LiveData<List<MovieData.Item>> {
-        isRequestInProgress = true
+        isRequest = true
 
-        val response = repository.getMovie(query, lastRequestedPage)
-        val items = if (response.isSuccessful) {
-            response.body()?.items ?: listOf()
-        } else {
-            listOf()
+        if (isMorePage) {
+            val response = repository.getMovie(query, startPage)
+            response.body()?.let {
+                val items = if (response.isSuccessful) {
+                    it.items ?: listOf()
+                } else {
+                    listOf()
+                }
+                _movieItems.postValue(items)
+
+                // 다음 시작 페이지
+                isMorePage = it.isMorePage().also { isMore ->
+                    if (isMore) startPage = it.getStartNumber(repository.displayCount)
+                }
+
+                Timber.d(">> query $query / isMorePage $isMorePage / startPage $startPage")
+            }
         }
 
-        if (items.isNotEmpty()) {
-            _isClear.postValue(isNext)
-            lastRequestedPage++
-        }
-
-        isRequestInProgress = false
-
-        _movieItems.postValue(items)
+        isRequest = false
         return _movieItems
     }
 
@@ -87,14 +92,17 @@ class MainDataSourceImpl @Inject constructor(
     }
 
     private fun reset() {
-        lastRequestedPage = 1
+        startPage = 1
+        isMorePage = true
+        _isClear.postValue(true)
     }
 
     /**
      * 다음 페이지
      */
     override suspend fun getNextPage() {
-        if (isRequestInProgress) return
+        if (isRequest) return
+        Timber.d(">> getNextPage")
         queryLiveData.value?.let {
             requestMovie(it)
         }
@@ -104,14 +112,18 @@ class MainDataSourceImpl @Inject constructor(
      * Diff Callback
      */
     override val diffCallback = object : DiffUtil.ItemCallback<MovieData.Item>() {
+
+        // 고유 식별자 판단
+        // areItemsTheSame 이 false 이면 areContentsTheSame 는 호출되지 않
         override fun areItemsTheSame(
             oldItem: MovieData.Item,
             newItem: MovieData.Item
         ): Boolean {
-            return oldItem.link == newItem.link
-                    && oldItem.title == oldItem.title
+            return oldItem.title == newItem.title
+                    && oldItem.subtitle == newItem.subtitle
         }
 
+        // 같은 객체 인지 확
         override fun areContentsTheSame(
             oldItem: MovieData.Item,
             newItem: MovieData.Item

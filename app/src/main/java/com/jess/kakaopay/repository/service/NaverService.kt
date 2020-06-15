@@ -1,6 +1,7 @@
 package com.jess.kakaopay.repository.service
 
 import com.jess.kakaopay.data.MovieData
+import com.jess.kakaopay.repository.NaverRepositoryImpl.Companion.DISPLAY_COUNT
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -18,7 +19,7 @@ interface NaverService {
     suspend fun getMovies(
         @Query("query") query: String?,
         @Query("start") start: Int = 1,
-        @Query("display") display: Int = 10
+        @Query("display") display: Int = DISPLAY_COUNT
     ): Response<MovieData>
 
 }
