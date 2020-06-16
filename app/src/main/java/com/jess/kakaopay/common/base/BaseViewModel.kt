@@ -9,17 +9,10 @@ import com.jess.kakaopay.repository.datasource.MainDataSource
  * @author jess
  * @since 2020.06.12
  */
-abstract class BaseViewModel(
-    private val dataSource: MainDataSource? = null
-) : ViewModel() {
+abstract class BaseViewModel() : ViewModel() {
 
     private val _status = MutableLiveData<BaseStatus>()
     val status: LiveData<BaseStatus> = _status
-
-    override fun onCleared() {
-        dataSource?.onCleared()
-        super.onCleared()
-    }
 
     fun onProgress(isShow: Boolean) {
         _status.value = BaseStatus.Progress(isShow)

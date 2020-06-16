@@ -13,10 +13,15 @@ import javax.inject.Inject
  */
 class MainViewModel @Inject constructor(
     private val dataSource: MainDataSource
-) : BaseViewModel(dataSource) {
+) : BaseViewModel() {
 
     val moveItems = dataSource.movieItems
     val isClear = dataSource.isClear
+
+    override fun onCleared() {
+        dataSource.onCleared()
+        super.onCleared()
+    }
 
     /**
      * 영화 검색

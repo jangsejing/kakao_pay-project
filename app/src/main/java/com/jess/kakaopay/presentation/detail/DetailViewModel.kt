@@ -13,7 +13,6 @@ import javax.inject.Inject
  * @since 2020.06.12
  */
 class DetailViewModel @Inject constructor(
-
 ) : BaseViewModel() {
 
     private val _item = MutableLiveData<MovieData.Item>()

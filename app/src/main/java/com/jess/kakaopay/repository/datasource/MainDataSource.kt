@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import androidx.recyclerview.widget.DiffUtil
 import com.jess.kakaopay.common.base.BaseDataSource
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.di.provider.DispatcherProvider
@@ -21,7 +20,6 @@ interface MainDataSource : BaseDataSource {
     // variables
     val movieItems: LiveData<List<MovieData.Item>>
     val isClear: LiveData<Boolean>
-    val diffCallback: DiffUtil.ItemCallback<MovieData.Item>
 
     // functions
     suspend fun getMovieData(query: String?)
@@ -105,30 +103,6 @@ class MainDataSourceImpl @Inject constructor(
         Timber.d(">> getNextPage")
         queryLiveData.value?.let {
             requestMovie(it)
-        }
-    }
-
-    /**
-     * Diff Callback
-     */
-    override val diffCallback = object : DiffUtil.ItemCallback<MovieData.Item>() {
-
-        // 고유 식별자 판단
-        // areItemsTheSame 이 false 이면 areContentsTheSame 는 호출되지 않
-        override fun areItemsTheSame(
-            oldItem: MovieData.Item,
-            newItem: MovieData.Item
-        ): Boolean {
-            return oldItem.title == newItem.title
-                    && oldItem.subtitle == newItem.subtitle
-        }
-
-        // 같은 객체 인지 확
-        override fun areContentsTheSame(
-            oldItem: MovieData.Item,
-            newItem: MovieData.Item
-        ): Boolean {
-            return oldItem == newItem
         }
     }
 }
