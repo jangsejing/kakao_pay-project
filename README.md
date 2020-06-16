@@ -11,8 +11,6 @@ Kotlin
 
 ## Arcitecture
 MVVM  
-Model - View - ViewModel   
-Repository - DataSource   
 ![arcithecture](https://github.com/jess-jang/Movies/blob/master/arcithecture_plan.png)
 
 ## JetPack
