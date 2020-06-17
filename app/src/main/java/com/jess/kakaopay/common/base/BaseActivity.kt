@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jess.kakaopay.BR
 import com.jess.kakaopay.common.extension.createActivityViewModel
-import com.jess.kakaopay.common.extension.showToast
 import com.jess.kakaopay.common.view.dialog.ProgressDialog
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -71,15 +70,8 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
      */
     private fun initStatus() {
         viewModel.run {
-            status.observe(this@BaseActivity, Observer {
-                when (it) {
-                    is BaseState.Progress -> {
-                        if (it.isShow) progressDialog.isShowing else progressDialog.dismiss()
-                    }
-                    is BaseState.Toast -> {
-                        showToast(it.message)
-                    }
-                }
+            onProgress?.observe(this@BaseActivity, Observer {
+                if (it) progressDialog.show() else progressDialog.dismiss()
             })
         }
     }

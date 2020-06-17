@@ -4,6 +4,10 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
+/**
+ * @author jess
+ * @since 2020.06.12
+ */
 object DeviceUtils {
 
     /**

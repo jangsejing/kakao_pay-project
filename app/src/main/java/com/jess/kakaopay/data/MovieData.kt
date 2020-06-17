@@ -6,7 +6,7 @@ import java.io.Serializable
  * 영화 Response
  *
  * @author jess
- * @since 2020.03.122020.06.19
+ * @since 2020.06.12
  */
 data class MovieData(
     val lastBuildDate: String?,
@@ -15,6 +15,17 @@ data class MovieData(
     val display: Int,
     val items: List<Item>?
 ) {
+
+    data class Item(
+        val title: String?,
+        val link: String?,
+        val image: String?,
+        val subtitle: String?,
+        val pubDate: String?,
+        val director: String?,
+        val actor: String?,
+        val userRating: String?
+    ) : Serializable
 
     /**
      * 시작 페이지
@@ -27,15 +38,4 @@ data class MovieData(
      * 다음 페이지 여부
      */
     fun isMorePage() = (start + display) <= total
-
-    data class Item(
-        val title: String?,
-        val link: String?,
-        val image: String?,
-        val subtitle: String?,
-        val pubDate: String?,
-        val director: String?,
-        val actor: String?,
-        val userRating: String?
-    ) : Serializable
 }

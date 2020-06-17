@@ -13,7 +13,7 @@ import javax.inject.Inject
  */
 class MainViewModel @Inject constructor(
     private val dataSource: MainDataSource
-) : BaseViewModel() {
+) : BaseViewModel(dataSource) {
 
     val moveItems = dataSource.movieItems
     val isClear = dataSource.isClear

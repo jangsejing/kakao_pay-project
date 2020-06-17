@@ -10,5 +10,4 @@ object NetworkConfig {
     const val NAVER_RUL = "https://openapi.naver.com"
     const val NAVER_CLIENT_ID: String = "ZWBj44AXXZBhGsMarS_d"
     const val NAVER_CLIENT_SECRET = "vUUpGBQpS2"
-    const val DISPLAY_COUNT = 20
 }

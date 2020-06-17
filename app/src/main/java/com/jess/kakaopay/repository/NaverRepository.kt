@@ -1,20 +1,16 @@
 package com.jess.kakaopay.repository
 
-import com.jess.kakaopay.common.manager.request
 import com.jess.kakaopay.data.MovieData
-import com.jess.kakaopay.data.ResponseData
 import com.jess.kakaopay.repository.service.NaverService
+import retrofit2.Response
 
 /**
  * @author jess
  * @since 2020.06.12
  */
 interface NaverRepository {
-
     val displayCount: Int
-
-    suspend fun getMovie(query: String?, start: Int): ResponseData<MovieData>?
-
+    suspend fun getMovie(query: String?, start: Int): Response<MovieData>
 }
 
 class NaverRepositoryImpl constructor(
@@ -27,6 +23,5 @@ class NaverRepositoryImpl constructor(
 
     override val displayCount: Int get() = DISPLAY_COUNT
 
-    override suspend fun getMovie(query: String?, start: Int) =
-        service.getMovies(query, start).request()
+    override suspend fun getMovie(query: String?, start: Int) = service.getMovies(query, start)
 }

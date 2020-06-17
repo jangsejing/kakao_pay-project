@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.jess.kakaopay.common.base.BaseDataSource
+import com.jess.kakaopay.common.base.BaseDataSourceImpl
+import com.jess.kakaopay.common.interfaces.OnResponseListener
+import com.jess.kakaopay.common.manager.request
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.di.provider.DispatcherProvider
 import com.jess.kakaopay.repository.NaverRepository
@@ -20,20 +23,23 @@ interface MainDataSource : BaseDataSource {
     // variables
     val movieItems: LiveData<List<MovieData.Item>>
     val isClear: LiveData<Boolean>
+    var isMorePage: Boolean
+    var startPage: Int
 
     // functions
+    fun reset()
     suspend fun getMovieData(query: String?)
     suspend fun getNextPage()
+
 }
 
 class MainDataSourceImpl @Inject constructor(
     private val repository: NaverRepository,
     override val dispatcher: DispatcherProvider
-) : MainDataSource {
+) : BaseDataSourceImpl(), MainDataSource {
 
-    private var isRequest = false
-    private var isMorePage = true
-    private var startPage = 1
+    override var isMorePage = true
+    override var startPage = 1
 
     private val _isClear = MutableLiveData<Boolean>()
     override val isClear: LiveData<Boolean> get() = _isClear
@@ -50,56 +56,55 @@ class MainDataSourceImpl @Inject constructor(
     }
 
     /**
-     * API 통신
-     */
-    private suspend fun requestMovie(
-        query: String?
-    ): LiveData<List<MovieData.Item>> {
-        isRequest = true
-
-        if (isMorePage) {
-
-
-            val items = repository.getMovie(query, startPage)?.data?.let {
-                // 다음 시작 페이지
-                isMorePage = it.isMorePage().also { isMore ->
-                    if (isMore) startPage = it.getStartNumber(repository.displayCount)
-                }
-                it.items
-            } ?: run {
-                listOf<MovieData.Item>()
-            }
-
-            _movieItems.postValue(items)
-        }
-
-        isRequest = false
-        return _movieItems
-    }
-
-    /**
      * 영화 검색
      */
     override suspend fun getMovieData(query: String?) {
         if (query.isNullOrEmpty()) return
         reset()
-        queryLiveData.postValue(query)
-    }
-
-    private fun reset() {
-        startPage = 1
-        isMorePage = true
-        _isClear.postValue(true)
+        queryLiveData.value = query
     }
 
     /**
      * 다음 페이지
      */
     override suspend fun getNextPage() {
-        if (isRequest) return
+        if (isRequest.value == true) return
         Timber.d(">> getNextPage")
         queryLiveData.value?.let {
             requestMovie(it)
         }
+    }
+
+    /**
+     * 페이징 정보 초기화
+     */
+    override fun reset() {
+        startPage = 1
+        isMorePage = true
+        _isClear.postValue(true)
+    }
+
+    /**
+     * API 통신
+     */
+    private suspend fun requestMovie(
+        query: String?
+    ): LiveData<List<MovieData.Item>> {
+        if (isMorePage) {
+            _isRequest.postValue(true)
+            repository.getMovie(query, startPage).request(object : OnResponseListener<MovieData> {
+
+                override fun onSuccess(response: MovieData?) {
+                    response?.let {
+                        isMorePage = it.isMorePage()
+                        if (isMorePage) startPage = it.getStartNumber(repository.displayCount)
+                        _movieItems.postValue(it.items)
+                    }
+
+                    _isRequest.postValue(false)
+                }
+            })
+        }
+        return _movieItems
     }
 }

@@ -22,15 +22,3 @@ fun PagingRecyclerView.addItems(
 ) {
     this.addItems(items, isClear)
 }
-
-/**
- * RecyclerView Adapter
- *
- * @param items
- */
-@BindingAdapter("submitList")
-fun PagingRecyclerView.submitList(
-    items: List<Any>?
-) {
-    this.submitList(items)
-}

@@ -63,15 +63,27 @@ class FakeMainDataSource : MainDataSource {
 
     override val dispatcher: DispatcherProvider get() = DispatcherProviderTest()
 
+    private val _isRequest = MutableLiveData<Boolean>()
+    override val isRequest: LiveData<Boolean> get() = _isRequest
+
     private val _isClear = MutableLiveData(false)
     override val isClear: LiveData<Boolean> get() = _isClear
+
+    override var isMorePage: Boolean = true
+    override var startPage: Int = 1
+
+    override fun reset() {
+
+    }
 
     private val _movieItems = MutableLiveData<List<MovieData.Item>>()
     override val movieItems: LiveData<List<MovieData.Item>> get() = _movieItems
 
     override suspend fun getMovieData(query: String?) {
         _isClear.value = true
+        _isRequest.value = true
         _movieItems.value = getFakeResponse().items
+        _isRequest.value = false
     }
 
     override suspend fun getNextPage() {
