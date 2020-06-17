@@ -11,7 +11,7 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
  * @since 2020.03.05
  */
 @ExperimentalCoroutinesApi
-class DispatcherTestProvider : DispatcherProvider {
+class DispatcherProviderTest : DispatcherProvider {
     override fun main() = TestCoroutineDispatcher()
     override fun io() = TestCoroutineDispatcher()
 }

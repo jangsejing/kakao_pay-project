@@ -73,10 +73,10 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
         viewModel.run {
             status.observe(this@BaseActivity, Observer {
                 when (it) {
-                    is BaseStatus.Progress -> {
+                    is BaseState.Progress -> {
                         if (it.isShow) progressDialog.isShowing else progressDialog.dismiss()
                     }
-                    is BaseStatus.Toast -> {
+                    is BaseState.Toast -> {
                         showToast(it.message)
                     }
                 }

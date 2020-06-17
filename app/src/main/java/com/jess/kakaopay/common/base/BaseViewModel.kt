@@ -3,7 +3,6 @@ package com.jess.kakaopay.common.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.jess.kakaopay.repository.datasource.MainDataSource
 
 /**
  * @author jess
@@ -11,15 +10,15 @@ import com.jess.kakaopay.repository.datasource.MainDataSource
  */
 abstract class BaseViewModel() : ViewModel() {
 
-    private val _status = MutableLiveData<BaseStatus>()
-    val status: LiveData<BaseStatus> = _status
+    private val _status = MutableLiveData<BaseState>()
+    val status: LiveData<BaseState> = _status
 
     fun onProgress(isShow: Boolean) {
-        _status.value = BaseStatus.Progress(isShow)
+        _status.value = BaseState.Progress(isShow)
     }
 
     fun onToast(message: String) {
-        _status.value = BaseStatus.Toast(message)
+        _status.value = BaseState.Toast(message)
     }
 
 }

@@ -36,7 +36,7 @@ class MainViewModel @Inject constructor(
     /**
      * 영화 다음 페이지 검색
      */
-    fun onNextPage() {
+    fun getNextPage() {
         viewModelScope.launch {
             dataSource.getNextPage()
         }

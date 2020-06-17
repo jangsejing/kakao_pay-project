@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import com.jess.kakaopay.R
 import com.jess.kakaopay.common.base.BaseActivity
-import com.jess.kakaopay.common.base.BaseListAdapter
 import com.jess.kakaopay.common.base.BaseRecyclerViewAdapter
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.databinding.MainActivityBinding
@@ -40,7 +39,7 @@ class MainActivity : BaseActivity<MainActivityBinding, MainViewModel>() {
             }
 
             setOnPagingListener {
-                viewModel.onNextPage()
+                viewModel.getNextPage()
             }
         }
 

@@ -13,15 +13,14 @@ import org.mockito.MockitoAnnotations
  * @author jess
  * @since 2020.03.05
  */
-open class BaseTest{
+open class BaseTest {
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule() // LiveData 테스트를 위한 객체
 
     @ExperimentalCoroutinesApi
     @get:Rule
-    var coroutineRule =
-        CoroutineRule() // Coroutine 테스트를 위한 객체
+    var coroutineRule = CoroutineRule() // Coroutine 테스트를 위한 객체
 
     @Before
     open fun setUp() {

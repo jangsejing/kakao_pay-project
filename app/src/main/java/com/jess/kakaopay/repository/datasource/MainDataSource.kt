@@ -58,22 +58,19 @@ class MainDataSourceImpl @Inject constructor(
         isRequest = true
 
         if (isMorePage) {
-            val response = repository.getMovie(query, startPage)
-            response.body()?.let {
-                val items = if (response.isSuccessful) {
-                    it.items ?: listOf()
-                } else {
-                    listOf()
-                }
-                _movieItems.postValue(items)
 
+
+            val items = repository.getMovie(query, startPage)?.data?.let {
                 // 다음 시작 페이지
                 isMorePage = it.isMorePage().also { isMore ->
                     if (isMore) startPage = it.getStartNumber(repository.displayCount)
                 }
-
-                Timber.d(">> query $query / isMorePage $isMorePage / startPage $startPage")
+                it.items
+            } ?: run {
+                listOf<MovieData.Item>()
             }
+
+            _movieItems.postValue(items)
         }
 
         isRequest = false
