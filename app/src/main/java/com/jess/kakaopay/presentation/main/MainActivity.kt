@@ -2,10 +2,11 @@ package com.jess.kakaopay.presentation.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.recyclerview.widget.RecyclerView
 import com.jess.kakaopay.R
 import com.jess.kakaopay.common.base.BaseActivity
-import com.jess.kakaopay.common.base.BaseListAdapter
 import com.jess.kakaopay.common.base.BaseRecyclerViewAdapter
+import com.jess.kakaopay.common.util.DeviceUtils
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.databinding.MainActivityBinding
 import com.jess.kakaopay.databinding.MainItemBinding
@@ -40,8 +41,20 @@ class MainActivity : BaseActivity<MainActivityBinding, MainViewModel>() {
             }
 
             setOnPagingListener {
-                viewModel.onNextPage()
+                viewModel.getNextPage()
             }
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(
+                    view: RecyclerView,
+                    newState: Int
+                ) {
+                    super.onScrollStateChanged(view, newState)
+                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                        DeviceUtils.hideKeyboard(view)
+                    }
+                }
+            })
         }
 
         // 텍스트 리턴
@@ -52,10 +65,6 @@ class MainActivity : BaseActivity<MainActivityBinding, MainViewModel>() {
 
     override fun onCreated(savedInstanceState: Bundle?) {
 
-    }
-
-    override fun initDataBinding() {
-        super.initDataBinding()
     }
 
     override fun onResume() {

@@ -18,6 +18,11 @@ class MainViewModel @Inject constructor(
     val moveItems = dataSource.movieItems
     val isClear = dataSource.isClear
 
+    override fun onCleared() {
+        dataSource.onCleared()
+        super.onCleared()
+    }
+
     /**
      * 영화 검색
      */
@@ -31,7 +36,7 @@ class MainViewModel @Inject constructor(
     /**
      * 영화 다음 페이지 검색
      */
-    fun onNextPage() {
+    fun getNextPage() {
         viewModelScope.launch {
             dataSource.getNextPage()
         }

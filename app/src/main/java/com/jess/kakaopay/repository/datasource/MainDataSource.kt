@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import androidx.recyclerview.widget.DiffUtil
 import com.jess.kakaopay.common.base.BaseDataSource
+import com.jess.kakaopay.common.base.BaseDataSourceImpl
+import com.jess.kakaopay.common.interfaces.OnResponseListener
+import com.jess.kakaopay.common.manager.request
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.di.provider.DispatcherProvider
 import com.jess.kakaopay.repository.NaverRepository
@@ -19,31 +21,34 @@ import javax.inject.Inject
 interface MainDataSource : BaseDataSource {
 
     // variables
+    var isMorePage: Boolean
+    var startPage: Int
     val movieItems: LiveData<List<MovieData.Item>>
     val isClear: LiveData<Boolean>
-    val diffCallback: DiffUtil.ItemCallback<MovieData.Item>
+    val queryData: MutableLiveData<String>
 
     // functions
+    fun reset()
     suspend fun getMovieData(query: String?)
     suspend fun getNextPage()
+
 }
 
 class MainDataSourceImpl @Inject constructor(
     private val repository: NaverRepository,
     override val dispatcher: DispatcherProvider
-) : MainDataSource {
+) : BaseDataSourceImpl(), MainDataSource {
 
-    private var isRequest = false
-    private var isMorePage = true
-    private var startPage = 1
+    override var isMorePage = true
+    override var startPage = 1
 
     private val _isClear = MutableLiveData<Boolean>()
     override val isClear: LiveData<Boolean> get() = _isClear
 
-    private val queryLiveData = MutableLiveData<String>()
+    override val queryData = MutableLiveData<String>()
 
     private val _movieItems = MutableLiveData<List<MovieData.Item>>()
-    override val movieItems = queryLiveData.switchMap { queryString ->
+    override val movieItems = queryData.switchMap { queryString ->
         Timber.d(">> queryString $queryString")
         liveData(dispatcher.io()) {
             // 영화 데이터 요청
@@ -52,83 +57,55 @@ class MainDataSourceImpl @Inject constructor(
     }
 
     /**
-     * API 통신
-     */
-    private suspend fun requestMovie(
-        query: String?
-    ): LiveData<List<MovieData.Item>> {
-        isRequest = true
-
-        if (isMorePage) {
-            val response = repository.getMovie(query, startPage)
-            response.body()?.let {
-                val items = if (response.isSuccessful) {
-                    it.items ?: listOf()
-                } else {
-                    listOf()
-                }
-                _movieItems.postValue(items)
-
-                // 다음 시작 페이지
-                isMorePage = it.isMorePage().also { isMore ->
-                    if (isMore) startPage = it.getStartNumber(repository.displayCount)
-                }
-
-                Timber.d(">> query $query / isMorePage $isMorePage / startPage $startPage")
-            }
-        }
-
-        isRequest = false
-        return _movieItems
-    }
-
-    /**
      * 영화 검색
      */
     override suspend fun getMovieData(query: String?) {
         if (query.isNullOrEmpty()) return
         reset()
-        queryLiveData.postValue(query)
-    }
-
-    private fun reset() {
-        startPage = 1
-        isMorePage = true
-        _isClear.postValue(true)
+        queryData.value = query
     }
 
     /**
      * 다음 페이지
      */
     override suspend fun getNextPage() {
-        if (isRequest) return
+        if (isRequest.value == true) return
         Timber.d(">> getNextPage")
-        queryLiveData.value?.let {
+        queryData.value?.let {
+            _isClear.postValue(false)
             requestMovie(it)
         }
     }
 
     /**
-     * Diff Callback
+     * 페이징 정보 초기화
      */
-    override val diffCallback = object : DiffUtil.ItemCallback<MovieData.Item>() {
+    override fun reset() {
+        startPage = 1
+        isMorePage = true
+        _isClear.postValue(true)
+    }
 
-        // 고유 식별자 판단
-        // areItemsTheSame 이 false 이면 areContentsTheSame 는 호출되지 않
-        override fun areItemsTheSame(
-            oldItem: MovieData.Item,
-            newItem: MovieData.Item
-        ): Boolean {
-            return oldItem.title == newItem.title
-                    && oldItem.subtitle == newItem.subtitle
-        }
+    /**
+     * API 통신
+     */
+    private suspend fun requestMovie(
+        query: String?
+    ): LiveData<List<MovieData.Item>> {
+        if (isMorePage) {
+            _isRequest.postValue(true)
+            repository.getMovie(query, startPage).request(object : OnResponseListener<MovieData> {
 
-        // 같은 객체 인지 확
-        override fun areContentsTheSame(
-            oldItem: MovieData.Item,
-            newItem: MovieData.Item
-        ): Boolean {
-            return oldItem == newItem
+                override fun onSuccess(response: MovieData?) {
+                    response?.let {
+                        isMorePage = it.isMorePage()
+                        if (isMorePage) startPage = it.getStartNumber(repository.displayCount)
+                        _movieItems.postValue(it.items)
+                    }
+                    _isRequest.postValue(false)
+                }
+            })
         }
+        return _movieItems
     }
 }

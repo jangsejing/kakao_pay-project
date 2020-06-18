@@ -9,10 +9,8 @@ import retrofit2.Response
  * @since 2020.06.12
  */
 interface NaverRepository {
-
     val displayCount: Int
     suspend fun getMovie(query: String?, start: Int): Response<MovieData>
-
 }
 
 class NaverRepositoryImpl constructor(
@@ -25,7 +23,5 @@ class NaverRepositoryImpl constructor(
 
     override val displayCount: Int get() = DISPLAY_COUNT
 
-    override suspend fun getMovie(query: String?, start: Int): Response<MovieData> =
-        service.getMovies(query, start)
-
+    override suspend fun getMovie(query: String?, start: Int) = service.getMovies(query, start)
 }
