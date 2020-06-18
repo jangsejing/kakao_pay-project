@@ -38,16 +38,9 @@
             android:background="@color/colorPrimary"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_failed"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_movie"
-                app:tint="@color/grey600" />
+            <include
+                layout="@layout/main_progress"
+                bind:vm="@{vm}" />
 
             <com.jess.kakaopay.common.view.PagingRecyclerView
                 android:id="@+id/rv_movie"

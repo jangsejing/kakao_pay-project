@@ -21,10 +21,11 @@ import javax.inject.Inject
 interface MainDataSource : BaseDataSource {
 
     // variables
-    val movieItems: LiveData<List<MovieData.Item>>
-    val isClear: LiveData<Boolean>
     var isMorePage: Boolean
     var startPage: Int
+    val movieItems: LiveData<List<MovieData.Item>>
+    val isClear: LiveData<Boolean>
+    val queryData: MutableLiveData<String>
 
     // functions
     fun reset()
@@ -44,10 +45,10 @@ class MainDataSourceImpl @Inject constructor(
     private val _isClear = MutableLiveData<Boolean>()
     override val isClear: LiveData<Boolean> get() = _isClear
 
-    private val queryLiveData = MutableLiveData<String>()
+    override val queryData = MutableLiveData<String>()
 
     private val _movieItems = MutableLiveData<List<MovieData.Item>>()
-    override val movieItems = queryLiveData.switchMap { queryString ->
+    override val movieItems = queryData.switchMap { queryString ->
         Timber.d(">> queryString $queryString")
         liveData(dispatcher.io()) {
             // 영화 데이터 요청
@@ -61,7 +62,7 @@ class MainDataSourceImpl @Inject constructor(
     override suspend fun getMovieData(query: String?) {
         if (query.isNullOrEmpty()) return
         reset()
-        queryLiveData.value = query
+        queryData.value = query
     }
 
     /**
@@ -70,7 +71,8 @@ class MainDataSourceImpl @Inject constructor(
     override suspend fun getNextPage() {
         if (isRequest.value == true) return
         Timber.d(">> getNextPage")
-        queryLiveData.value?.let {
+        queryData.value?.let {
+            _isClear.postValue(false)
             requestMovie(it)
         }
     }
@@ -100,7 +102,6 @@ class MainDataSourceImpl @Inject constructor(
                         if (isMorePage) startPage = it.getStartNumber(repository.displayCount)
                         _movieItems.postValue(it.items)
                     }
-
                     _isRequest.postValue(false)
                 }
             })

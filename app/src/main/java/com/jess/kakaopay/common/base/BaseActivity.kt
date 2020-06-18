@@ -3,11 +3,10 @@ package com.jess.kakaopay.common.base
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jess.kakaopay.BR
 import com.jess.kakaopay.common.extension.createActivityViewModel
-import com.jess.kakaopay.common.view.dialog.ProgressDialog
+import com.jess.kakaopay.common.view.ProgressDialog
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -50,7 +49,6 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
         super.onCreate(savedInstanceState)
         initDataBinding()
         initLayout()
-        initStatus()
         onCreated(savedInstanceState)
     }
 
@@ -62,17 +60,6 @@ abstract class BaseActivity<VD : ViewDataBinding, VM : BaseViewModel> : DaggerAp
         binding.run {
             lifecycleOwner = this@BaseActivity
             setVariable(BR.vm, viewModel)
-        }
-    }
-
-    /**
-     * 상태 체크
-     */
-    private fun initStatus() {
-        viewModel.run {
-            onProgress?.observe(this@BaseActivity, Observer {
-                if (it) progressDialog.show() else progressDialog.dismiss()
-            })
         }
     }
 }

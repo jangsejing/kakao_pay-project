@@ -8,10 +8,10 @@ import com.jess.kakaopay.di.provider.DispatcherProvider
 import com.jess.kakaopay.presentation.main.MainViewModel
 import com.jess.kakaopay.repository.datasource.MainDataSource
 import com.jess.kakaopay.util.DispatcherProviderTest
-import junit.framework.Assert.assertFalse
-import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
@@ -29,27 +29,27 @@ class MainViewModelTest : BaseTest() {
     }
 
     @Test
-    fun `query 입력 후 isClear가 true인가?`() = runBlockingTest {
+    fun `query 입력 후 isClear 확인 --- true 여부`() = runBlockingTest {
         viewModel.getMovie("테스트")
         coroutineRule.advanceTimeBy(500)
         assertTrue(viewModel.isClear.value ?: false)
     }
 
     @Test
-    fun `query 입력 후 moveItems의 데이터가 존재하는가?`() = runBlockingTest {
+    fun `query 입력 후 moveItems 데이이터 확인 --- 존재 여부`() = runBlockingTest {
         viewModel.getMovie("테스트")
         coroutineRule.advanceTimeBy(500)
         assertTrue(viewModel.moveItems.value?.isNotEmpty() ?: false)
     }
 
     @Test
-    fun `다음 페이지를 호출할 때 isClear가 false인가?`() {
+    fun `다음 페이지를 호출할 때 isClear 확인 --- false 여부`() {
         viewModel.getNextPage()
         assertFalse(viewModel.isClear.value ?: false)
     }
 
     @Test
-    fun `다음 페이지 호출할 때 moveItems의 데이터가 존재하는가?`() {
+    fun `다음 페이지 호출할 때 moveItems의 데이터 확인 --- 존재 여부`() {
         viewModel.getNextPage()
         assertTrue(viewModel.moveItems.value?.isNotEmpty() ?: false)
     }
@@ -69,6 +69,8 @@ class FakeMainDataSource : MainDataSource {
     private val _isClear = MutableLiveData(false)
     override val isClear: LiveData<Boolean> get() = _isClear
 
+    override val queryData = MutableLiveData<String>()
+
     override var isMorePage: Boolean = true
     override var startPage: Int = 1
 
@@ -82,12 +84,12 @@ class FakeMainDataSource : MainDataSource {
     override suspend fun getMovieData(query: String?) {
         _isClear.value = true
         _isRequest.value = true
-        _movieItems.value = getFakeResponse().items
+        _movieItems.value = createFakeResponse().items
         _isRequest.value = false
     }
 
     override suspend fun getNextPage() {
-        _movieItems.value = getFakeResponse().items
+        _movieItems.value = createFakeResponse().items
     }
 
     /**
@@ -95,7 +97,7 @@ class FakeMainDataSource : MainDataSource {
      *
      * @return
      */
-    private fun getFakeResponse(): MovieData {
+    private fun createFakeResponse(): MovieData {
         val list = arrayListOf<MovieData.Item>()
         for (i in 0..10) {
             list.add(

@@ -1,4 +1,4 @@
-package com.jess.kakaopay.common.view.dialog
+package com.jess.kakaopay.common.view
 
 import android.app.Dialog
 import android.content.Context
