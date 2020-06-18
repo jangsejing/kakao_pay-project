@@ -3,6 +3,7 @@ package com.jess.kakaopay.repository
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.repository.service.NaverService
 import retrofit2.Response
+import javax.inject.Inject
 
 /**
  * @author jess
@@ -13,7 +14,7 @@ interface NaverRepository {
     suspend fun getMovie(query: String?, start: Int): Response<MovieData>
 }
 
-class NaverRepositoryImpl constructor(
+class NaverRepositoryImpl @Inject constructor(
     private val service: NaverService
 ) : NaverRepository {
 
