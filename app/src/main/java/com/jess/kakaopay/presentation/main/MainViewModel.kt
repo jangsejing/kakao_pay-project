@@ -2,6 +2,7 @@ package com.jess.kakaopay.presentation.main
 
 import androidx.lifecycle.viewModelScope
 import com.jess.kakaopay.common.base.BaseViewModel
+import com.jess.kakaopay.common.extension.safeScope
 import com.jess.kakaopay.repository.datasource.MainDataSource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class MainViewModel @Inject constructor(
      * 영화 검색
      */
     fun getMovie(query: String?) {
-        viewModelScope.launch {
+        viewModelScope.safeScope().launch {
             delay(500)
             dataSource.getMovieData(query)
         }
@@ -37,7 +38,7 @@ class MainViewModel @Inject constructor(
      * 영화 다음 페이지 검색
      */
     fun getNextPage() {
-        viewModelScope.launch {
+        viewModelScope.safeScope().launch {
             dataSource.getNextPage()
         }
     }
