@@ -28,7 +28,7 @@ class DetailActivity : BaseActivity<DetailActivityBinding, DetailViewModel>(),
     override val viewModelClass = DetailViewModel::class.java
 
     private val movieData by lazy {
-        intent?.getSerializableExtra(EXTRA_MOVIE_DATA) as? MovieData.Item
+        intent?.getParcelableExtra(EXTRA_MOVIE_DATA) as? MovieData.Item
     }
 
     override fun initLayout() {
