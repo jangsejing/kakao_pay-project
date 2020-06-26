@@ -17,7 +17,7 @@ MVVM
 ![arcithecture](https://github.com/jess-jang/Movies/blob/master/arcithecture_plan.png)
 
 ## JetPack
-AndroidX, AAC ViewModel, DataBinding, Lifecycle, LiveData, ListAdapter
+AndroidX, AAC ViewModel, DataBinding, Lifecycle, LiveData
 
 ## Network
 Retrofit2
