@@ -19,7 +19,6 @@ open class BaseViewHolder<T : Any?>(
                 setVariable(BR.item, item)
                 viewDataBinding.executePendingBindings()
             }
-
         }
     }
 }

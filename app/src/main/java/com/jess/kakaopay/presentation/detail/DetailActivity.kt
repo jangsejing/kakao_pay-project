@@ -10,7 +10,6 @@ import com.jess.kakaopay.common.base.BaseActivity
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.databinding.DetailActivityBinding
 import kotlinx.android.synthetic.main.detail_activity.*
-import timber.log.Timber
 
 /**
  * @author jess

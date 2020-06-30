@@ -33,6 +33,5 @@ class DetailViewModel @Inject constructor(
         item.value?.let {
             _detailUrl.value = it.link
         }
-
     }
 }

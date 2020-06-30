@@ -43,19 +43,11 @@ class PagingRecyclerView @JvmOverloads constructor(
                     val lastVisibleItemPosition = manager.findLastVisibleItemPosition()
 
                     if (totalItemCount == 0 || dy == 0) return
-                    if (
-//                        !isLoading &&
-                        totalItemCount <= (lastVisibleItemPosition + VISIBLE_THRESHOLD)) {
+                    if (totalItemCount <= (lastVisibleItemPosition + VISIBLE_THRESHOLD)) {
                         Timber.d(">> OnPaging")
                         isLoading = true
                         listener?.invoke()
                     }
-
-//                    if (!isLoading && (visibleItemCount + lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount)) {
-//                        Timber.d(">> OnPaging")
-//                        isLoading = true
-//                        listener?.invoke()
-//                    }
                 }
             }
         })

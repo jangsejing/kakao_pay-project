@@ -1,6 +1,7 @@
 package com.jess.kakaopay.presentation.main
 
 import androidx.lifecycle.viewModelScope
+import com.jess.kakaopay.common.base.BaseDataSource
 import com.jess.kakaopay.common.base.BaseViewModel
 import com.jess.kakaopay.common.extension.safeScope
 import com.jess.kakaopay.repository.datasource.MainDataSource
@@ -14,15 +15,12 @@ import javax.inject.Inject
  */
 class MainViewModel @Inject constructor(
     private val dataSource: MainDataSource
-) : BaseViewModel(dataSource) {
+) : BaseViewModel() {
+
+    override var baseDataSource: BaseDataSource? = dataSource
 
     val moveItems = dataSource.movieItems
     val isClear = dataSource.isClear
-
-    override fun onCleared() {
-        dataSource.onCleared()
-        super.onCleared()
-    }
 
     /**
      * 영화 검색
