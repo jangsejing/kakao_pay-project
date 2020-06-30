@@ -1,4 +1,4 @@
-package com.jess.kakaopay.repository.datasource
+package com.jess.kakaopay.domain.datasource
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,7 @@ import com.jess.kakaopay.common.interfaces.OnResponseListener
 import com.jess.kakaopay.common.manager.request
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.di.provider.DispatcherProvider
-import com.jess.kakaopay.repository.NaverRepository
+import com.jess.kakaopay.domain.repository.NaverRepository
 import timber.log.Timber
 import javax.inject.Inject
 

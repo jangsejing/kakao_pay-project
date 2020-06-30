@@ -1,7 +1,7 @@
-package com.jess.kakaopay.repository
+package com.jess.kakaopay.domain.repository
 
 import com.jess.kakaopay.data.MovieData
-import com.jess.kakaopay.repository.service.NaverService
+import com.jess.kakaopay.domain.repository.service.NaverService
 import retrofit2.Response
 import javax.inject.Inject
 

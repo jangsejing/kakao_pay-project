@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.jess.kakaopay.common.base.BaseDataSource
 import com.jess.kakaopay.common.base.BaseViewModel
 import com.jess.kakaopay.common.extension.safeScope
-import com.jess.kakaopay.repository.datasource.MainDataSource
+import com.jess.kakaopay.domain.datasource.MainDataSource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject

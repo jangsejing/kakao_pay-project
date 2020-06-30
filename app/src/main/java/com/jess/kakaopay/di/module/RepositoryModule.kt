@@ -1,7 +1,7 @@
 package com.jess.kakaopay.di.module
 
-import com.jess.kakaopay.repository.NaverRepository
-import com.jess.kakaopay.repository.NaverRepositoryImpl
+import com.jess.kakaopay.domain.repository.NaverRepository
+import com.jess.kakaopay.domain.repository.NaverRepositoryImpl
 import dagger.Binds
 import dagger.Module
 

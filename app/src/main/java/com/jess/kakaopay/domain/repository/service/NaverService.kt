@@ -1,7 +1,7 @@
-package com.jess.kakaopay.repository.service
+package com.jess.kakaopay.domain.repository.service
 
 import com.jess.kakaopay.data.MovieData
-import com.jess.kakaopay.repository.NaverRepositoryImpl.Companion.DISPLAY_COUNT
+import com.jess.kakaopay.domain.repository.NaverRepositoryImpl.Companion.DISPLAY_COUNT
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

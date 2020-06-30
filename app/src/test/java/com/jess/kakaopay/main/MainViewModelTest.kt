@@ -6,7 +6,7 @@ import com.jess.kakaopay.base.BaseTest
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.di.provider.DispatcherProvider
 import com.jess.kakaopay.presentation.main.MainViewModel
-import com.jess.kakaopay.repository.datasource.MainDataSource
+import com.jess.kakaopay.domain.datasource.MainDataSource
 import com.jess.kakaopay.util.DispatcherProviderTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

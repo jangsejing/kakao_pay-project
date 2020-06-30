@@ -2,9 +2,9 @@ package com.jess.kakaopay.main
 
 import com.jess.kakaopay.base.BaseTest
 import com.jess.kakaopay.data.MovieData
-import com.jess.kakaopay.repository.NaverRepository
-import com.jess.kakaopay.repository.datasource.MainDataSourceImpl
-import com.jess.kakaopay.repository.service.NaverService
+import com.jess.kakaopay.domain.repository.NaverRepository
+import com.jess.kakaopay.domain.datasource.MainDataSourceImpl
+import com.jess.kakaopay.domain.repository.service.NaverService
 import com.jess.kakaopay.util.DispatcherProviderTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -97,7 +97,8 @@ class MainDataSourceTest : BaseTest() {
         assertEquals(dataSource.isMorePage, true)
     }
 
-    inner class FakeNaverRepository : NaverRepository {
+    inner class FakeNaverRepository :
+        NaverRepository {
 
         override val displayCount: Int = 20
 

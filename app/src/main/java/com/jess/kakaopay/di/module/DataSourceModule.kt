@@ -1,7 +1,7 @@
 package com.jess.kakaopay.di.module
 
-import com.jess.kakaopay.repository.datasource.MainDataSource
-import com.jess.kakaopay.repository.datasource.MainDataSourceImpl
+import com.jess.kakaopay.domain.datasource.MainDataSource
+import com.jess.kakaopay.domain.datasource.MainDataSourceImpl
 import dagger.Binds
 import dagger.Module
 

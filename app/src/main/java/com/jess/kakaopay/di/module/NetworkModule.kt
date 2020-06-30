@@ -2,7 +2,7 @@ package com.jess.kakaopay.di.module
 
 import com.jess.kakaopay.BuildConfig
 import com.jess.kakaopay.common.constant.NetworkConfig
-import com.jess.kakaopay.repository.service.NaverService
+import com.jess.kakaopay.domain.repository.service.NaverService
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
