@@ -11,16 +11,11 @@ interface BaseDataSource {
     val dispatcher: DispatcherProvider
 
     fun onCleared() {
-        dispatcher.run {
-            io().cancel()
-            main().cancel()
-        }
+        dispatcher.job.cancel()
     }
 }
 
-abstract class BaseDataSourceImpl(
-
-) : BaseDataSource {
+abstract class BaseDataSourceImpl : BaseDataSource {
 
     val _isRequest = MutableLiveData<Boolean>()
     override val isRequest: LiveData<Boolean> get() = _isRequest
