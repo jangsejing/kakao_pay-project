@@ -6,6 +6,7 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.databinding.BindingAdapter
 import com.jess.kakaopay.common.util.tryCatch
 
 /**
@@ -16,6 +17,7 @@ import com.jess.kakaopay.common.util.tryCatch
 /**
  * <b>, </b> 강조 텍스트 변환
  */
+@BindingAdapter("original", "start", "end", "color")
 fun TextView.accentTextColor(
     original: String,
     start: String,
@@ -51,6 +53,7 @@ fun TextView.accentTextColor(
 /**
  * oldValue를 newValue로 변경
  */
+@BindingAdapter("original", "oldValue", "newValue")
 fun TextView.replaceText(
     original: String,
     oldValue: String,

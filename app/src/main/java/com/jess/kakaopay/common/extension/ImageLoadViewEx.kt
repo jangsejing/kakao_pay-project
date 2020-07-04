@@ -1,5 +1,6 @@
 package com.jess.kakaopay.common.extension
 
+import androidx.databinding.BindingAdapter
 import com.jess.kakaopay.common.view.component.ImageLoadView
 
 /**
@@ -10,6 +11,7 @@ import com.jess.kakaopay.common.view.component.ImageLoadView
 /**
  * 이미지 로드
  */
+@BindingAdapter("url")
 fun ImageLoadView.loadImage(
     url: String?
 ) {

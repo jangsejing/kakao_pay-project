@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jess.kakaopay.R
 import com.jess.kakaopay.common.base.BaseActivity
 import com.jess.kakaopay.common.base.BaseRecyclerViewAdapter
+import com.jess.kakaopay.common.extension.ContextEx
 import com.jess.kakaopay.common.util.DeviceUtils
 import com.jess.kakaopay.data.MovieData
 import com.jess.kakaopay.databinding.MainActivityBinding
